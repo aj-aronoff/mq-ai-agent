@@ -6,6 +6,12 @@ An automated MQ monitoring pipeline that detects silent queues, generates struct
 
 ---
 
+## Team
+
+**IBM MQ Simulation Lab for common Problems**
+
+---
+
 ## Track
 
 **Theme 2: Experienced Developers — Modernize What Matters**
