@@ -1,0 +1,37 @@
+diagnose ACME.COMMERCE.QUEUE on QMS1
+
+watsonx 10:48 PM
+watsonx said
+Diagnosis of ACME.COMMERCE.QUEUE on QMS1
+
+Filter table...
+
+
+Attribute
+
+Value
+Current depth (CURDEPTH)	3 200
+Maximum depth (MAXDEPTH)	4 000
+Depth-high threshold (QDEPTHHI)	80 %
+Depth-low threshold (QDEPTHLO)	20 %
+Oldest-message age (MSGAGE)	391 383 s ~ 4.5 days
+1–5 of 13 items
+
+
+What the numbers tell us
+Depth at the high-threshold limit - 3 200 messages is exactly 80 % of the configured maximum. Because QDPHIEV is DISABLED, no depth-high alarm will be raised even though the queue is at its threshold.
+All messages are uncommitted - UNCOM equals the current depth, meaning every message is waiting for a transaction commit. This blocks consumption and drives the depth up.
+Very old messages - The oldest message has been sitting for about 4.5 days, indicating a significant backlog.
+Limited parallelism - Only one consumer (IPPROCS = 1) and one producer (OPPROCS = 1) are attached, which can become a bottleneck if the workload is higher.
+
+Recommended actions
+Resolve the uncommitted transaction - Identify the application (producer or consumer) that left the transaction open and force it to commit or roll back. This will free the 3 200 messages for processing.
+Enable depth-high events - Set QDPHIEV to ENABLED so the queue manager can alert when depth exceeds the 80 % threshold. Consider lowering the threshold for a critical queue.
+Address the backlog - Add more consumer instances or increase IPPROCS (if the application design allows) so messages are consumed faster.
+Review MAXDEPTH - If occasional spikes beyond 4 000 messages are expected, raise MAXDEPTH to give more headroom, but keep appropriate monitoring and alerts in place.
+Check transaction handling - Look for long-running transactions that may be causing the high UNCOM count and shorten their windows where possible.
+Continue regular monitoring - With MONQ already set to HIGH, use the collected metrics to track trends in CURDEPTH, UNCOM, and MSGAGE, and set up alerts for abnormal growth.
+
+Bottom line
+ACME.COMMERCE.QUEUE on QMS1 is sitting at its high-depth threshold, all messages are uncommitted, and the oldest messages are several days old. The most urgent step is to clear the pending transaction and enable depth-high alerts, then consider adding consumers or increasing MAXDEPTH to prevent future buildup.
+

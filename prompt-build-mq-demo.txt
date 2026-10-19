@@ -1,0 +1,79 @@
+Background
+
+Ash Singh, Product Manager of "IBM MQ AI", has given me access to a queue manager
+called QMS1. Here is what I found when I examined it:
+
+  Question) Please display q manager name for QMS1
+  Answer) The queue manager name is QMS1.
+
+  Q) Please run display ql(ACME*) curdepth, get
+  A)
+     Queue                     Current depth
+     ACME.ALERTS.QUEUE               0
+     ACME.ANALYTICS.QUEUE            0
+     ACME.APPDATA.QUEUE            850
+     ACME.ARCHIVE.QUEUE              0
+     ACME.AUDIT.QUEUE                0
+     ACME.BACKUP.QUEUE               0
+     ACME.CACHE.QUEUE                0
+     ACME.COMMERCE.QUEUE          3200
+     ACME.CUSTOMER.QUEUE             0
+     ACME.EVENTS.QUEUE               0
+
+I want a local copy of that environment so I can build and demo an AI ticket
+triage agent against it without touching Ash's queue manager.
+
+What I need you to build
+
+1) A script that creates the queue manager and the queues.
+   Create a local queue manager named QMS1, start it and its listener, and
+   create all ten ACME queues listed above as local queues. Make the script
+   safe to re-run: if QMS1 already exists, don't blow up, just make sure the
+   queues are there. Put the MQSC in its own file so I can read it.
+
+2) A script that loads the messages.
+   Load the same depths my sample shows: 850 messages onto ACME.APPDATA.QUEUE
+   and 3200 messages onto ACME.COMMERCE.QUEUE. The other eight queues stay
+   empty. The messages can be simple generated payloads, but they should look
+   like plausible application traffic, not just "test test test". Let me pass
+   a queue name and a count on the command line so I can top a queue up or
+   build a different scenario later.
+
+3) A diagnostic script that scans the queue manager and opens tickets.
+   Walk every queue on QMS1, skip anything starting with SYSTEM. and skip
+   model, alias and remote queues. Flag a queue as a problem when it has
+   messages sitting on it but nothing reading them, that is CURDEPTH greater
+   than zero and IPPROCS equal to zero. For each queue that matches, create
+   one ticket. The ticket should carry the queue manager name, the queue name,
+   the current depth, the max depth and how full the queue is as a percentage,
+   the open input and open output counts, the time of the scan, and a severity
+   based on how full the queue is. Write the tickets out as JSON files, one per
+   problem queue, and print a short summary to the console. If nothing is
+   wrong, say so and exit clean.
+
+4) A ticket enhancer script that adds the diagnostic instruction.
+   The MQ AI Agent can already read and act on a plain instruction in this
+   form:
+
+       Diagnose <problem-q-name> on <q-manager-name>
+
+   So the enhancement is simply to put that instruction on the ticket. Take a
+   ticket from step 3, fill in the queue name and the queue manager name from
+   the ticket itself, and write the finished line onto the ticket, for example:
+
+       Diagnose ACME.COMMERCE.QUEUE on QMS1
+
+   The enhancer should read the ticket JSON, add the instruction in its own
+   field, and write the ticket back out. Keep the wording exactly in that
+   form, since that is what the agent parses. Don't add MQSC commands or a
+   remediation write-up at this stage; the agent produces those itself once it
+   has the instruction. This is the first version of the enhancement step and
+   I expect to add more to it later, so keep it a separate script from the
+   scanner and easy to extend.
+
+Notes
+
+Keep the four scripts independent so I can run them one at a time and test them.
+Please create a master shell script that will run all of the shell scripts.
+I have already installed MQ on this machine. I will run the script with administrator privileges (so it can create the q manager).
+Please Add a short README that lists the four commands in the order that I would run them for a demo and a command to run everything.

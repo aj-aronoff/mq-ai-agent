@@ -1,0 +1,16 @@
+{
+  "ticket_id": "TKT-20261017021905-ACME.APPDATA.QUEUE",
+  "queue_manager": "QMS1",
+  "queue_name": "ACME.APPDATA.QUEUE",
+  "scan_time": "2026-10-17T02:19:02Z",
+  "current_depth": 850,
+  "max_depth": 1000,
+  "percent_full": 85,
+  "open_input_count": 0,
+  "open_output_count": 0,
+  "severity": "HIGH",
+  "status": "OPEN",
+  "remediation_status": "PENDING",
+  "remediation_mqsc": null,
+  "diagnostic_instruction": "Diagnose ACME.APPDATA.QUEUE on QMS1"
+}

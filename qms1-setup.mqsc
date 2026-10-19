@@ -1,0 +1,25 @@
+* ============================================================
+* qms1-setup.mqsc
+* Creates or updates the ten ACME local queues on QMS1.
+* Run via:  runmqsc QMS1 < qms1-setup.mqsc
+*
+* DEFINE ... REPLACE is safe to re-run at any time:
+* it updates queue attributes (e.g. MAXDEPTH) without
+* touching messages already on the queue.
+* ============================================================
+
+* --- Queues with explicit MAXDEPTH --------------------------
+DEFINE QLOCAL(ACME.APPDATA.QUEUE)  MAXDEPTH(1000)  REPLACE
+DEFINE QLOCAL(ACME.COMMERCE.QUEUE) MAXDEPTH(4000)  REPLACE
+
+* --- Remaining eight queues (default MAXDEPTH 5000) ---------
+DEFINE QLOCAL(ACME.ALERTS.QUEUE)    REPLACE
+DEFINE QLOCAL(ACME.ANALYTICS.QUEUE) REPLACE
+DEFINE QLOCAL(ACME.ARCHIVE.QUEUE)   REPLACE
+DEFINE QLOCAL(ACME.AUDIT.QUEUE)     REPLACE
+DEFINE QLOCAL(ACME.BACKUP.QUEUE)    REPLACE
+DEFINE QLOCAL(ACME.CACHE.QUEUE)     REPLACE
+DEFINE QLOCAL(ACME.CUSTOMER.QUEUE)  REPLACE
+DEFINE QLOCAL(ACME.EVENTS.QUEUE)    REPLACE
+
+END

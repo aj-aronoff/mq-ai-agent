@@ -1,0 +1,107 @@
+Hello, my name is A.J. Aronoff. Today we're going to talk about an MQ ticket pipeline.
+
+This MQ system is monitored and when problems are detected, tickets are produced.
+
+Those tickets are then enhanced with an instruction that's passed to the MQ AI agent for diagnosis.
+
+This diagnosis is shared with an MQ services team that can resolve the problems 30% faster using the diagnosis.
+
+It's how we get from a silent queue to an actionable diagnosis.
+
+The system that we've built detects problems, creates tickets.
+
+The tickets that are created are then enhanced with a specific instruction that's passed.
+
+The live MQ AI agent takes that instruction and creates a diagnosis for the problem, which we will demonstrate.
+
+In this case, we have a queue that's 85% full and no consumer.
+
+The system that we built has queue managers and queues and we've potentially broken the system so that no one is reading from a particular queue.
+
+The problem is detected, tickets are created, they're enhanced in a specific way and passed to the live system.
+
+We use programs like dump MQ message to put messages on the queue.
+
+We created the queue manager, created the queue.
+
+Eventually, we disabled it so no one would be able to read from the queue.
+
+Run MQ SC then looks and checks every queue, getting the current depth of every queue, the number of readers of every queue,
+
+and calculates, oh, there's a problem whenever there's a queue that has messages but no readers.
+
+And it creates tickets for those problems and many types of problems can be reported in this way.
+
+The tickets that are created have the name of the queue and the queue manager.
+
+And then the enhancement gives an instruction to the MQ AI agent, diagnose the problem queue on that queue manager.
+
+In this particular case, we pass that exact instruction on to the MQ AI agent.
+
+It diagnosed the problem.
+
+It detected that the queue was get disabled.
+
+It gives the instruction on how to fix the problem by saying, okay, let's make it so that you can get messages from the queue.
+
+It gives statistics.
+
+It recommends finding out why the queue was disabled.
+
+And the agent had live information about the queue manager and the queue.
+
+It can run a variety of display commands to get all that information for its diagnosis, but it won't change anything.
+
+It's got an MCP server.
+
+It can collect information from the queue manager.
+
+What's excellent about it is it infers the intent of the question, analyzes the query, and resolves ambiguity.
+
+Since we're talking about a relatively narrow domain, it can give very meaningful answers to these questions.
+
+And it can manage up to 20 queue managers.
+
+What it won't do is make changes on its own.
+
+The agent recommends, but people still decide what to do.
+
+And of course, the people can recommend additional information, ask about alternatives, get enough information so that they are confident in the results.
+
+And the agent itself says, let's check the results and make sure it really worked.
+
+I would like to thank everybody for attending.
+
+I'm now going to show the queue manager being built.
+
+Everything was, of course, scripted.
+
+This program creates the queue manager, creates the queues, puts messages on the queues.
+
+Checks to make sure they're all there.
+
+Checks all the queues, creates tickets for the queues.
+
+Enhances the tickets with, you know, diagnostic commands.
+
+I'm now going to copy this particular command to the actual MQAI agent.
+
+It is now 9.12.
+
+It'll analyze the query.
+
+It'll resolve ambiguities.
+
+It's preparing a response.
+
+The response, including that the queue was get disabled.
+
+It gives you statistics about the queue.
+
+It notices that MQ is turned off and recommends turning it on.
+
+It has the appropriate fix for turning it back on.
+
+And it has next steps to investigate after the problem is fixed to make sure the problem is truly fixed.
+
+Once again, I would like to thank everybody for attending.

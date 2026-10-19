@@ -1,0 +1,40 @@
+diagnose ACME.APPDATA.QUEUE on QMS1
+
+watsonx 10:43 PM
+watsonx said
+Here's a concise diagnosis of ACME.APPDATA.QUEUE on QMS1, along with the key issues and recommended steps to get the queue back to healthy operation.
+
+Current state
+Filter table...
+
+
+Attribute
+
+Value
+
+Comment
+CURDEPTH	850	85 % of the queue's capacity
+MAXDEPTH	1000	Maximum allowed depth
+QDEPTHHI	80	High-depth threshold (far lower than current depth)
+QDPHIEV	DISABLED	No event generated when the threshold is crossed
+GET	DISABLED	Consumers cannot retrieve messages
+1–5 of 11 items
+
+
+Main problems
+GET is disabled - the queue cannot be consumed, causing the backlog.
+Depth (850) far exceeds the high-depth threshold (80), yet high-depth events are turned off, so no alert is raised.
+No active consumers (IPPROCS = 0) - even if GET were enabled, nothing is reading the messages.
+Monitoring is off (MONQ = OFF) - you can't see message age or other runtime metrics.
+Threshold settings are mis-aligned - a threshold of 80 messages on a queue that can hold 1000 is unusually low.
+
+Recommended actions
+Enable GET: ALTER QLOCAL(ACME.APPDATA.QUEUE) GET(ENABLED) so applications can retrieve messages.
+Start or reconnect consumer applications to increase IPPROCS and begin processing the backlog.
+Raise the high-depth threshold to a realistic level (e.g., ~800 messages, about 80 % of MAXDEPTH).
+Enable high-depth events: ALTER QLOCAL(ACME.APPDATA.QUEUE) QDPHIEV(ENABLED) to get alerts when the depth exceeds the new threshold.
+Turn on queue monitoring: ALTER QLOCAL(ACME.APPDATA.QUEUE) MONQ(HIGH) to obtain accurate MSGAGE and other metrics.
+Consider increasing MAXDEPTH if the workload regularly approaches the current limit, after reviewing storage and performance impacts.
+Verify producer connections (OPPROCS should be > 0) to ensure messages are being put as expected; investigate any missing producers.
+
+By enabling GET, adding consumers, adjusting the threshold and monitoring settings, and confirming producer activity, the queue should clear the backlog and you'll receive timely alerts if depth again approaches critical levels.

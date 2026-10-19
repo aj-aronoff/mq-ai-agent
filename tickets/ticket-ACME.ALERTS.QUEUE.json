@@ -1,0 +1,16 @@
+{
+  "ticket_id": "TKT-20261017014705-ACME.ALERTS.QUEUE",
+  "queue_manager": "QMS1",
+  "queue_name": "ACME.ALERTS.QUEUE",
+  "scan_time": "2026-10-17T01:47:04Z",
+  "current_depth": 5,
+  "max_depth": 5000,
+  "percent_full": 0,
+  "open_input_count": 0,
+  "open_output_count": 0,
+  "severity": "LOW",
+  "status": "OPEN",
+  "remediation_status": "PENDING",
+  "remediation_mqsc": null,
+  "diagnostic_instruction": "Diagnose ACME.ALERTS.QUEUE on QMS1"
+}

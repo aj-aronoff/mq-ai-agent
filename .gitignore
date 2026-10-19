@@ -1,0 +1,28 @@
+# secrets and local config
+.env
+.env.*
+*.pem
+*.key
+appsettings.Local.json
+
+# dependencies and build output
+node_modules/
+dist/
+build/
+bin/
+obj/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# logs
+*.log
+logs/
+
+# OS and editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/

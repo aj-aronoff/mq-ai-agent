@@ -1,0 +1,10 @@
+{
+  "audit_version": "1.0",
+  "ticket_id": "TKT-20261017014705-ACME.ALERTS.QUEUE",
+  "queue_name": "ACME.ALERTS.QUEUE",
+  "queue_manager": "QMS1",
+  "diagnostic_instruction": "Diagnose ACME.ALERTS.QUEUE on QMS1",
+  "session_source": "IDE",
+  "diagnosis_timestamp": null,
+  "bob_response": null
+}

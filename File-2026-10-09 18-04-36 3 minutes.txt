@@ -1,0 +1,37 @@
+Hello, my name is AJ Aronoff. In this hackathon, we're going to have Bob create a ticket pipeline.
+
+It will monitor an MQ system, create tickets, and then enhance those tickets to be passed on
+
+to an MQ AI agent, going from a silent queue to an actionable diagnosis.
+
+IBM Bob built the queue managers, built the queues, put messages on the queues. It then monitors that
+
+system looking for messages that have queues but no readers. It creates tickets when it finds that
+
+sort of problem. It enhances that ticket, putting in exact instructions for the MQ AI agent saying,
+
+diagnose this queue on this queue manager. Then we pass off those instructions to a live MQ AI agent,
+
+which then comes back with a diagnosis. In this particular case, I've got a queue that's 85% full.
+
+No one's reading from the queue. No one's monitoring it. Now with the new ticketing system, we monitor the
+
+queue and we create tickets for this. The monitoring program is simple. It just calls display queue status.
+
+It looks for queues that have messages on them, cur depth greater than zero, IP prox equals zero,
+
+nothing reading from the queue. IBM's Bob program then created a ticket for any error it found,
+
+and then a separate program enhanced that ticket with the exact instructions needed for the MQ AI agent.
+
+In this particular case, we then passed those exact instructions to the MQ AI agent. It came back with
+
+its diagnosis. It said, okay, the problem is that get is disabled. It then gives us the instructions,
+
+alter queue local to fix that problem and re-enable get for that queue. The agent, however, only makes recommendations.
+
+People still decide what to do and people can ask for more information, including long-term recommendations.
+
+I would like to thank everybody for attending the hackathon. I enjoyed using IBM Bob.
+
+I would particularly like to thank Ash, the IBM product manager for the MQ AI agent, who allowed me to use a live version of the MQ AI agent today. Thank you all.

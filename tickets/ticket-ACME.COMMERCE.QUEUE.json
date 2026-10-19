@@ -1,0 +1,16 @@
+{
+  "ticket_id": "TKT-20261017021906-ACME.COMMERCE.QUEUE",
+  "queue_manager": "QMS1",
+  "queue_name": "ACME.COMMERCE.QUEUE",
+  "scan_time": "2026-10-17T02:19:02Z",
+  "current_depth": 3200,
+  "max_depth": 4000,
+  "percent_full": 80,
+  "open_input_count": 0,
+  "open_output_count": 0,
+  "severity": "MEDIUM",
+  "status": "OPEN",
+  "remediation_status": "PENDING",
+  "remediation_mqsc": null,
+  "diagnostic_instruction": "Diagnose ACME.COMMERCE.QUEUE on QMS1"
+}
